@@ -3,8 +3,6 @@ import tensorflow as tf
 
 TRAIN_URL = "https://imaginary.tech/experiments/train_labels.csv"
 TEST_URL = "https://imaginary.tech/experiments/test_labels.csv"
-# TRAIN_URL = "~/Pictures/HOHA_Shot_Classificator/train_labels.csv"
-# TEST_URL = "~/Pictures/HOHA_Shot_Classificator/test_labels.csv"
 
 CSV_COLUMN_NAMES = ['frame_height', 'face_x_min', 'face_y_min', 'face_x_max', 'face_y_max', 'person_x_min', 'person_y_min', 'person_x_max', 'person_y_max', 'class']
 CLASS = ['ELS', 'LS', 'MLS', 'MS', 'MCU', 'CU', 'ECU']
@@ -65,7 +63,7 @@ def eval_input_fn(features, labels, batch_size):
 
 # `tf.parse_csv` sets the types of the outputs to match the examples given in
 #     the `record_defaults` argument.
-CSV_TYPES = [[0.0], [0.0], [0.0], [0.0], [0.0], [0.0], [0.0], [0.0], [0.0], [0]]
+CSV_TYPES = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]]
 
 def _parse_line(line):
     # Decode the line into its fields
