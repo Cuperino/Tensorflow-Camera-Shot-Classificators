@@ -1,7 +1,7 @@
 <annotation>
-	<folder>0-ELS</folder>
+	<folder>train</folder>
 	<filename>vlcsnap-2018-03-29-03h13m53s023.png</filename>
-	<path>/home/javier/Pictures/HOHA_Shot_Classificator/train/vlcsnap-2018-03-29-03h13m53s023.png</path>
+	<path>/home/javier/Imaginary/Tech/x-personal/Tensorflow-Camera-Shot-Classificators/Datasets/HOHA-Camera-Shot-Frames-Dataset/80-20/train/vlcsnap-2018-03-29-03h13m53s023.png</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -12,6 +12,18 @@
 	</size>
 	<segmented>0</segmented>
 	<object>
+		<name>face</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>214</xmin>
+			<ymin>46</ymin>
+			<xmax>223</xmax>
+			<ymax>56</ymax>
+		</bndbox>
+	</object>
+	<object>
 		<name>person</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
@@ -20,7 +32,19 @@
 			<xmin>197</xmin>
 			<ymin>37</ymin>
 			<xmax>239</xmax>
-			<ymax>139</ymax>
+			<ymax>138</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>face</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>256</xmin>
+			<ymin>48</ymin>
+			<xmax>265</xmax>
+			<ymax>56</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -32,31 +56,7 @@
 			<xmin>245</xmin>
 			<ymin>40</ymin>
 			<xmax>281</xmax>
-			<ymax>143</ymax>
-		</bndbox>
-	</object>
-	<object>
-		<name>face</name>
-		<pose>Unspecified</pose>
-		<truncated>0</truncated>
-		<difficult>0</difficult>
-		<bndbox>
-			<xmin>213</xmin>
-			<ymin>45</ymin>
-			<xmax>224</xmax>
-			<ymax>56</ymax>
-		</bndbox>
-	</object>
-	<object>
-		<name>face</name>
-		<pose>Unspecified</pose>
-		<truncated>0</truncated>
-		<difficult>0</difficult>
-		<bndbox>
-			<xmin>256</xmin>
-			<ymin>47</ymin>
-			<xmax>265</xmax>
-			<ymax>58</ymax>
+			<ymax>145</ymax>
 		</bndbox>
 	</object>
 	<object>

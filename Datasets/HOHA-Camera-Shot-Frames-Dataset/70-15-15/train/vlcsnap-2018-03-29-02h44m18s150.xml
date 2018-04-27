@@ -1,7 +1,7 @@
 <annotation>
-	<folder>5-CU</folder>
+	<folder>train</folder>
 	<filename>vlcsnap-2018-03-29-02h44m18s150.png</filename>
-	<path>/home/javier/Pictures/HOHA_Shot_Classificator/train/vlcsnap-2018-03-29-02h44m18s150.png</path>
+	<path>/home/javier/Imaginary/Tech/x-personal/Tensorflow-Camera-Shot-Classificators/Datasets/HOHA-Camera-Shot-Frames-Dataset/80-20/train/vlcsnap-2018-03-29-02h44m18s150.png</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -24,7 +24,7 @@
 		</bndbox>
 	</object>
 	<object>
-		<name>face</name>
+		<name>person</name>
 		<pose>Unspecified</pose>
 		<truncated>1</truncated>
 		<difficult>0</difficult>
