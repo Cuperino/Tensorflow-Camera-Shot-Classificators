@@ -30,8 +30,8 @@ parser.add_argument('--train_steps', default=1000, type=int,
 
 def main(argv):
     # Debug
-    sess = tf_debug.LocalCLIDebugWrapperSession(sess)
-    sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan)
+    # sess = tf_debug.LocalCLIDebugWrapperSession(sess)
+    # sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan)
 
     args = parser.parse_args(argv[1:])
 
@@ -43,12 +43,16 @@ def main(argv):
     for key in train_x.keys():
         my_feature_columns.append(tf.feature_column.numeric_column(key=key))
 
-    # Build 2 hidden layer DNN with 10, 10 units respectively.
-    classifier = tf.estimator.DNNClassifier(
+    # # Build i hidden layers of n nodes each: [n(1), n(2), [...], n(i)]
+    # classifier = tf.estimator.DNNClassifier(
+    #     feature_columns=my_feature_columns,
+    #     hidden_units=[90, 90],
+    #     # The model must choose between 7 classes.
+    #     n_classes=7)
+
+    # Linear classifier.
+    classifier = tf.estimator.LinearClassifier(
         feature_columns=my_feature_columns,
-        # Two hidden layers of 10 nodes each.
-        hidden_units=[45, 45],
-        # The model must choose between 7 classes.
         n_classes=7)
 
     # Train the Model.
@@ -65,18 +69,30 @@ def main(argv):
     print('\nTest set accuracy: {accuracy:0.3f}\n'.format(**eval_result))
 
     # Generate predictions from the model
-    expected = ['ELS', 'LS', 'MLS', 'MS', 'MCU', 'CU', 'ECU']
+    expected = ['CU', 'LS', 'MS', 'MCU', 'MS', 'MLS', 'MCU', 'CU', 'ECU', 'MCU', 'ELS']
     predict_x = {
-        'frame_height': [224.0/100, 256.0/100, 256.0/100, 256.0/100, 224.0/100, 256.0/100, 224.0/100, 256.0/100, 256.0/100, 256.0/100, 224.0/100],
-        'face_x_min':   [254.0/100, 154.0/100, 108.0/100, 142.0/100, 197.0/100, 192.0/100, 252.0/100, 168.0/100, 1.0/100,   182.0/100, 246.0/100],
-        'face_y_min':   [1.0/100,   25.0/100,  88.0/100,  51.0/100,  25.0/100,  21.0/100,  40.0/100,  35.0/100,  1.0/100,   19.0/100,  62.0/100 ],
-        'face_x_max':   [427.0/100, 167.0/100, 155.0/100, 204.0/100, 244.0/100, 216.0/100, 303.0/100, 270.0/100, 434.0/100, 235.0/100, 258.0/100],
-        'face_y_max':   [192.0/100, 47.0/100,  125.0/100, 116.0/100, 90.0/100,  59.0/100,  114.0/100, 218.0/100, 256.0/100, 113.0/100, 75.0/100 ],
-        'person_x_min': [186.0/100, 144.0/100, 61.0/100,  58.0/100,  135.0/100, 165.0/100, 196.0/100, 145.0/100, 1.0/100,   108.0/100, 232.0/100],
-        'person_y_min': [1.0/100,   2.0/100,   40.0/100,  26.0/100,  7.0/100,   9.0/100,   26.0/100,  1.0/100,   1.0/100,   1.0/100,   60.0/100 ],
-        'person_x_max': [528.0/100, 201.0/100, 223.0/100, 261.0/100, 290.0/100, 228.0/100, 426.0/100, 400.0/100, 448.0/100, 304.0/100, 266.0/100],
-        'person_y_max': [224.0/100, 211.0/100, 256.0/100, 256.0/100, 224.0/100, 256.0/100, 224.0/100, 256.0/100, 256.0/100, 256.0/100, 190.0/100]
+        'frame_height': [224.0, 256.0, 256.0, 256.0, 224.0, 256.0, 224.0, 256.0, 256.0, 256.0, 224.0],
+        'face_x_min':   [254.0, 154.0, 108.0, 142.0, 197.0, 192.0, 252.0, 168.0, 1.0,   182.0, 246.0],
+        'face_y_min':   [1.0,   25.0,  88.0,  51.0,  25.0,  21.0,  40.0,  35.0,  1.0,   19.0,  62.0 ],
+        'face_x_max':   [427.0, 167.0, 155.0, 204.0, 244.0, 216.0, 303.0, 270.0, 434.0, 235.0, 258.0],
+        'face_y_max':   [192.0, 47.0,  125.0, 116.0, 90.0,  59.0,  114.0, 218.0, 256.0, 113.0, 75.0 ],
+        'person_x_min': [186.0, 144.0, 61.0,  58.0,  135.0, 165.0, 196.0, 145.0, 1.0,   108.0, 232.0],
+        'person_y_min': [1.0,   20.0,  40.0,  26.0,  7.0,   9.0,   26.0,  1.0,   1.0,   1.0,   60.0 ],
+        'person_x_max': [528.0, 201.0, 223.0, 261.0, 290.0, 228.0, 426.0, 400.0, 448.0, 304.0, 266.0],
+        'person_y_max': [224.0, 211.0, 256.0, 256.0, 224.0, 256.0, 224.0, 256.0, 256.0, 256.0, 190.0]
     }
+
+    # 224.0,254.0, 1.0,427.0,192.0,186.0, 1.0,528.0,224.0, 5    CU
+    # 256.0,154.0,25.0,167.0, 47.0,144.0,20.0,201.0,211.0, 1    LS
+    # 256.0,108.0,88.0,155.0,125.0, 61.0,40.0,223.0,256.0, 3    MS
+    # 256.0,142.0,51.0,204.0,116.0, 58.0,26.0,261.0,256.0, 4    MCU
+    # 224.0,197.0,25.0,244.0, 90.0,135.0, 7.0,290.0,224.0, 3    MS
+    # 256.0,192.0,21.0,216.0, 59.0,165.0, 9.0,228.0,256.0, 2    MLS
+    # 224.0,252.0,40.0,303.0,114.0,196.0,26.0,426.0,224.0, 4    MCU
+    # 256.0,168.0,35.0,270.0,218.0,145.0, 1.0,400.0,256.0, 5    CU
+    # 256.0,  1.0, 1.0,434.0,256.0,  1.0, 1.0,448.0,256.0, 6    ECU
+    # 256.0,182.0,19.0,235.0,113.0,108.0, 1.0,304.0,256.0, 4    MCU
+    # 224.0,246.0,62.0,258.0, 75.0,232.0,60.0,266.0,190.0, 0    ELS
 
     predictions = classifier.predict(
         input_fn=lambda:shot_data.eval_input_fn(predict_x,
