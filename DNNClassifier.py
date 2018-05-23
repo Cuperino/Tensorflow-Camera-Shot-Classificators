@@ -11,7 +11,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-"""An Example of a DNNClassifier for the Iris dataset."""
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -22,17 +22,12 @@ from tensorflow.python import debug as tf_debug
 
 import shot_data
 
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--batch_size', default=100, type=int, help='batch size')
 parser.add_argument('--train_steps', default=1000, type=int,
                     help='number of training steps')
 
 def main(argv):
-    # Debug
-    # sess = tf_debug.LocalCLIDebugWrapperSession(sess)
-    # sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan)
-
     args = parser.parse_args(argv[1:])
 
     # Fetch the data
@@ -43,16 +38,11 @@ def main(argv):
     for key in train_x.keys():
         my_feature_columns.append(tf.feature_column.numeric_column(key=key))
 
-    # # Build i hidden layers of n nodes each: [n(1), n(2), [...], n(i)]
-    # classifier = tf.estimator.DNNClassifier(
-    #     feature_columns=my_feature_columns,
-    #     hidden_units=[90, 90],
-    #     # The model must choose between 7 classes.
-    #     n_classes=7)
-
-    # Linear classifier.
-    classifier = tf.estimator.LinearClassifier(
+    # Build i hidden layers of n nodes each: [n(1), n(2), [...], n(i)]
+    classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
+        hidden_units=[90, 90],
+        # The model must choose between 7 classes.
         n_classes=7)
 
     # Train the Model.
